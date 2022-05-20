@@ -1,0 +1,14 @@
+C:\Users\secret7\source\repos\PRIVACYLAG\SCANROOT\obj\Debug\SCANROOT.csproj.AssemblyReference.cache
+C:\Users\secret7\source\repos\PRIVACYLAG\SCANROOT\obj\Debug\SCANROOT.Properties.Resources.resources
+C:\Users\secret7\source\repos\PRIVACYLAG\SCANROOT\obj\Debug\SCANROOT.RunApp.resources
+C:\Users\secret7\source\repos\PRIVACYLAG\SCANROOT\obj\Debug\SCANROOT.csproj.GenerateResource.cache
+C:\Users\secret7\source\repos\PRIVACYLAG\SCANROOT\obj\Debug\SCANROOT.csproj.CoreCompileInputs.cache
+C:\Users\secret7\source\repos\PRIVACYLAG\SCANROOT\bin\Debug\Checksum.mdf
+C:\Users\secret7\source\repos\PRIVACYLAG\SCANROOT\bin\Debug\Checksum_log.ldf
+C:\Users\secret7\source\repos\PRIVACYLAG\SCANROOT\bin\Debug\SCANROOT.exe.config
+C:\Users\secret7\source\repos\PRIVACYLAG\SCANROOT\bin\Debug\SCANROOT.exe
+C:\Users\secret7\source\repos\PRIVACYLAG\SCANROOT\bin\Debug\SCANROOT.pdb
+C:\Users\secret7\source\repos\PRIVACYLAG\SCANROOT\obj\Debug\SCANROOT.exe
+C:\Users\secret7\source\repos\PRIVACYLAG\SCANROOT\obj\Debug\SCANROOT.pdb
+C:\Users\secret7\source\repos\PRIVACYLAG\SCANROOT\bin\Debug\CheckFsum.mdf
+C:\Users\secret7\source\repos\PRIVACYLAG\SCANROOT\bin\Debug\CheckFsum_log.ldf

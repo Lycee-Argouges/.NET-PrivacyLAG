@@ -1,0 +1,2 @@
+C:\Users\secret7\source\repos\PRIVACYLAG\SETUPMSI\bin\Release\SETUPMSI.msi
+C:\Users\secret7\source\repos\PRIVACYLAG\SETUPMSI\bin\Release\SETUPMSI.wixpdb

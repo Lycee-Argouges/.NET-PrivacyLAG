@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Product Id="*" Name="DATA PRIVACY ARGOUGES" Language="1033" Version="1.0.14" Manufacturer="RRA" UpgradeCode="f9e63539-898a-4f8f-a23b-187adcb31da2">
+		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+
+		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+		<MediaTemplate EmbedCab="yes"/>
+
+		<Property Id="ROOTDRIVE">C:\</Property>
+
+		<Feature Id="ProductFeature" Title="DATA PRIVACY ARGOUGES" Level="1">
+			<ComponentGroupRef Id="ProductComponents" />
+			<ComponentGroupRef Id="ProductComponentsDesk" />
+			<ComponentGroupRef Id="ProductComponentsApp" />
+		</Feature>
+
+		<CustomAction Id="ExecSetup"
+					  Directory="INSTALLFOLDER"
+					  Execute="immediate"
+					  Impersonate="no"
+					  ExeCommand="[SystemFolder]cmd.exe /c &quot;&quot;C:\Program Files (x86)\DATA PRIVACY ARGOUGES\gpg4win-4.0.2.exe&quot; /S /C=&quot;C:\Program Files (x86)\DATA PRIVACY ARGOUGES\gpg4win-install.ini&quot;&quot;"
+					  Return="ignore" />
+
+		<InstallExecuteSequence>
+			<Custom Action="ExecSetup" After="InstallFinalize">
+				NOT Installed
+			</Custom>
+		</InstallExecuteSequence>
+		
+	</Product>
+
+	<Fragment>
+		<Directory Id="TARGETDIR" Name="SourceDir">
+			<Directory Id="ProgramFilesFolder">
+				<Directory Id="INSTALLFOLDER" Name="DATA PRIVACY ARGOUGES" />
+			</Directory>
+			<Directory Id="ProgramMenuFolder">
+				<Directory Id="ApplicationProgramsFolder" Name="CryptoTool"/>
+			</Directory>
+			<Directory Id="USERSFOLDER" Name="Users">
+				<Directory Id="PUBLICFOLDER" Name="Public">
+					<Directory Id="DESKTOPLNK" Name="Desktop" />
+				</Directory>
+			</Directory>
+		</Directory>
+	</Fragment>
+
+	<Fragment>
+		<ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+			<!-- TODO: Remove the comments around this Component element and the ComponentRef below in order to add resources to this installer. -->
+			<Component Id="ProductComponent" Guid="dd53fb70-2605-4326-9950-de2e327e0f1b">
+				<!-- TODO: Insert files, registry keys, and other resources here. -->
+				<File Id='CRYPTOTOOLEXE' Name='CRYPTOTOOL.exe' DiskId='1' Source='ressources/CRYPTOTOOL.exe' KeyPath='yes'>
+					<!--<Shortcut Id='CRYPTOTOOLLNK' Directory='DESKTOPLNK' Name='CRYPTOTOOL' Advertise='yes' WorkingDirectory='INSTALLFOLDER' IconIndex='0'>
+						<Icon Id="CRYPTOTOOL.ICO" SourceFile="CRYPTOTOOL.ico" />
+					</Shortcut>-->
+				</File>
+				<File Id="GPG4WINEXE" Name="gpg4win-4.0.2.exe" DiskId='1' Source="ressources\gpg4win-4.0.2.exe" KeyPath="no" ></File>
+				<File Id="GPG4WININI" Name="gpg4win-install.ini" DiskId='1' Source="ressources\gpg4win-install.ini" KeyPath="no" ></File>
+			</Component>
+		</ComponentGroup>
+	</Fragment>
+	<Fragment>
+		<ComponentGroup Id="ProductComponentsDesk" Directory="DESKTOPLNK">
+			<Component Id="ProductComponentDesk" Guid="354f12f4-ccad-4d9d-b950-c175fded72b2">
+				<!-- TODO: Insert files, registry keys, and other resources here. -->
+				<File Id="CRYPTOTOOLLNKDESK" Name="CRYPTOTOOL.lnk" DiskId='1' Source="ressources\CRYPTOTOOL.lnk" KeyPath="no" ></File>
+			</Component>
+		</ComponentGroup>
+	</Fragment>
+	<Fragment>
+		<ComponentGroup Id="ProductComponentsApp" Directory="ApplicationProgramsFolder">
+			<Component Id="ProductComponentApp" Guid="79185296-2fbb-48bd-bdf8-fbb1fb45cbcc">
+				<!-- TODO: Insert files, registry keys, and other resources here.-->
+				<File Id="CRYPTOTOOLLNKAPP" Name="CRYPTOTOOL.lnk" DiskId='1' Source="ressources\CRYPTOTOOL.lnk" KeyPath="no" ></File>
+				<RemoveFolder Id="CleanUpShortCut" Directory="ApplicationProgramsFolder" On="uninstall"/>
+				<RegistryValue Root="HKCU" Key="Software\RRA\CryptoTool" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
+			</Component>
+		</ComponentGroup>
+	</Fragment>
+</Wix>

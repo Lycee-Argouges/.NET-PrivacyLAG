@@ -1,0 +1,13 @@
+C:\Users\secret7\source\repos\PRIVACYLAG\CRYPTOTOOL\bin\Debug\CRYPTOTOOL.exe.config
+C:\Users\secret7\source\repos\PRIVACYLAG\CRYPTOTOOL\bin\Debug\CRYPTOTOOL.exe
+C:\Users\secret7\source\repos\PRIVACYLAG\CRYPTOTOOL\bin\Debug\CRYPTOTOOL.pdb
+C:\Users\secret7\source\repos\PRIVACYLAG\CRYPTOTOOL\obj\Debug\CRYPTOTOOL.csproj.AssemblyReference.cache
+C:\Users\secret7\source\repos\PRIVACYLAG\CRYPTOTOOL\obj\Debug\CRYPTOTOOL.Config.resources
+C:\Users\secret7\source\repos\PRIVACYLAG\CRYPTOTOOL\obj\Debug\CRYPTOTOOL.Properties.Resources.resources
+C:\Users\secret7\source\repos\PRIVACYLAG\CRYPTOTOOL\obj\Debug\CRYPTOTOOL.csproj.GenerateResource.cache
+C:\Users\secret7\source\repos\PRIVACYLAG\CRYPTOTOOL\obj\Debug\CRYPTOTOOL.csproj.CoreCompileInputs.cache
+C:\Users\secret7\source\repos\PRIVACYLAG\CRYPTOTOOL\obj\Debug\CRYPTOTOOL.exe
+C:\Users\secret7\source\repos\PRIVACYLAG\CRYPTOTOOL\obj\Debug\CRYPTOTOOL.pdb
+C:\Users\secret7\source\repos\PRIVACYLAG\CRYPTOTOOL\obj\Debug\CRYPTOTOOL.DragDrop.resources
+C:\Users\secret7\source\repos\PRIVACYLAG\CRYPTOTOOL\obj\Debug\CRYPTOTOOL.Office.resources
+C:\Users\secret7\source\repos\PRIVACYLAG\CRYPTOTOOL\obj\Debug\CRYPTOTOOL.Help.resources

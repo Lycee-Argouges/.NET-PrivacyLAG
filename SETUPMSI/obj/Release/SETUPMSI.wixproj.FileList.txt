@@ -1,0 +1,6 @@
+C:\Users\secret7\source\repos\PRIVACYLAG\SETUPMSI\bin\Release\SETUPMSI.msi
+C:\Users\secret7\source\repos\PRIVACYLAG\SETUPMSI\bin\Release\SETUPMSI.wixpdb
+obj\Release\Product.wixobj
+obj\Release\SETUPMSI.wixproj.BindContentsFileListnull.txt
+obj\Release\SETUPMSI.wixproj.BindOutputsFileListnull.txt
+obj\Release\SETUPMSI.wixproj.BindBuiltOutputsFileListnull.txt
