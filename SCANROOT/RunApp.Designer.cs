@@ -35,6 +35,7 @@ namespace SCANROOT
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.CB_Select = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -75,7 +76,7 @@ namespace SCANROOT
             this.label3.AutoSize = true;
             this.label3.BackColor = System.Drawing.Color.Transparent;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(34, 143);
+            this.label3.Location = new System.Drawing.Point(34, 159);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(288, 39);
             this.label3.TabIndex = 3;
@@ -92,17 +93,28 @@ namespace SCANROOT
             this.pictureBox1.TabIndex = 4;
             this.pictureBox1.TabStop = false;
             // 
+            // CB_Select
+            // 
+            this.CB_Select.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.CB_Select.FormattingEnabled = true;
+            this.CB_Select.Location = new System.Drawing.Point(37, 122);
+            this.CB_Select.Name = "CB_Select";
+            this.CB_Select.Size = new System.Drawing.Size(285, 21);
+            this.CB_Select.TabIndex = 5;
+            // 
             // RunApp
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(354, 289);
+            this.Controls.Add(this.CB_Select);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.Bt_Check);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "RunApp";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -120,6 +132,7 @@ namespace SCANROOT
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.ComboBox CB_Select;
     }
 }
 

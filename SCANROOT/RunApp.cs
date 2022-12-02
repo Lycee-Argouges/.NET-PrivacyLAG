@@ -24,16 +24,20 @@ namespace SCANROOT
         private string hashCode;
         private Boolean flagError;
         private Boolean isSilent = false;
+        private DateTime dateNow = DateTime.Today;
 
-        public RunApp(string optionalstr = "through")
+        public RunApp(string optionalstr = "through", string optionalpath = "")
         {
             if (optionalstr =="through")
             {
                 InitializeComponent();
+                Initialize_CB();
             }
             else if (optionalstr == "task")
             {
                 InitializeComponent();
+                this.CB_Select.Items.Add(optionalpath.ToString());
+                this.CB_Select.SelectedItem = optionalpath.ToString();
                 isSilent = true;
                 this.Hide();
                 Thread t = new Thread(new ThreadStart(CheckIntegrity));
@@ -42,30 +46,48 @@ namespace SCANROOT
             }
         }
 
+        private void Initialize_CB()
+        {
+            foreach (var folder in System.IO.Directory.GetDirectories("P:\\"))
+            {
+                this.CB_Select.Items.Add(folder.ToString());
+            }
+
+        }
+
         private void Bt_Check_Click(object sender, EventArgs e)
         {
-            Thread t = new Thread(new ThreadStart(CheckIntegrity));
-            t.IsBackground = true;
-            t.Start();
+            if (this.CB_Select.SelectedItem.ToString() != "")
+            {
+                Thread t = new Thread(new ThreadStart(CheckIntegrity));
+                t.IsBackground = true;
+                t.Start();
+            }
+            else
+            {
+                MessageBox.Show("Sélectionnez un chemin d'analyse.", "PRIVACYLAG", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
 
         private void CheckIntegrity()
         {
             using (StreamWriter writetext = new StreamWriter("checksumSHA512.log", true))
             {
-                writetext.WriteLine(DateTime.Now + "....: Début du traitement.");
+                writetext.WriteLine(DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss") + "....: Début du traitement.");
             }
             if (System.IO.File.Exists("error.log"))
             {
                 System.IO.File.Delete("error.log");
             }
             flagError = false;
+            var files = GetAllAccessibleFiles(this.CB_Select.SelectedItem.ToString());
+            string shareName = this.CB_Select.SelectedItem.ToString();
             /*if(System.IO.File.Exists("CheckFsum.mdf") & System.IO.File.Exists("CheckFsum_log.ldf"))
             {
                 System.IO.File.Copy("CheckFsum.mdf", "C:\\Temp\\CheckFsum.mdf",true);
                 System.IO.File.Copy("CheckFsum_log.ldf", "C:\\Temp\\CheckFsum_log.ldf", true);
             }*/
-            var files = GetAllAccessibleFiles(@"P:\");
+            //var files = GetAllAccessibleFiles(@"P:\");
             /*foreach(string getFile in System.IO.Directory.GetFiles("P:\\", "*.*", SearchOption.AllDirectories))
             {
                 MessageBox.Show(getFile);
@@ -81,14 +103,14 @@ namespace SCANROOT
                         {
                             DateTime fileDate = System.IO.File.GetCreationTime(filePath);
                             string hashCodeCurrent = ProcFsum(filePath);
-                            if (hashCodeCurrent != null) { AddFile(filePath, hashCodeCurrent, fileDate); }
+                            if (hashCodeCurrent != null) { AddFile(filePath, hashCodeCurrent, fileDate, shareName); }
                         }
                         else
                         {
                             var cultureInfo = new CultureInfo("fr-FR");
                             DateTime fileDate = System.IO.File.GetCreationTime(filePath);
                             var parsedDate = DateTime.Parse(dateFile, cultureInfo);
-                            if (fileDate.ToString().Substring(0, 16) != parsedDate.ToString().Substring(0, 16))
+                            if (fileDate.ToString("dd/MM/yyyy HH:mm:ss").Substring(0, 16) != parsedDate.ToString("dd/MM/yyyy HH:mm:ss").Substring(0, 16))
                             {
                                 string hashCodeCurrent = ProcFsum(filePath);
                                 if (hashCodeCurrent != null) { EditFile(filePath, hashCodeCurrent, fileDate); }
@@ -103,7 +125,7 @@ namespace SCANROOT
                                         flagError = true;
                                         using (StreamWriter writetext = new StreamWriter("checksumSHA512.log", true))
                                         {
-                                            writetext.WriteLine(DateTime.Now + "....: Erreur d'intégrité du fichier " + filePath);
+                                            writetext.WriteLine(DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss") + "....: Erreur d'intégrité du fichier " + filePath);
                                         }
                                     }
                                     EditFile(filePath, hashCodeCurrent, fileDate);
@@ -115,7 +137,7 @@ namespace SCANROOT
                     {
                         using (StreamWriter writetext = new StreamWriter("checksumSHA512.log", true))
                         {
-                            writetext.WriteLine(DateTime.Now + "....: Impossible d'accéder (verrouillé par l'utilisateur) au fichier " + filePath);
+                            writetext.WriteLine(DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss") + "....: Impossible d'accéder (verrouillé par l'utilisateur) au fichier " + filePath);
                         }
                     }
                 }
@@ -123,14 +145,14 @@ namespace SCANROOT
                 {
                     using (StreamWriter writetext = new StreamWriter("checksumSHA512.log", true))
                     {
-                        writetext.WriteLine(DateTime.Now + "....: Impossible d'accéder (verrouillé par l'utilisateur) au fichier " + filePath);
+                        writetext.WriteLine(DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss") + "....: Impossible d'accéder (verrouillé par l'utilisateur) au fichier " + filePath);
                     }
                 }
             }
-            DeleteFile();
+            DeleteFile(shareName);
             using (StreamWriter writetext = new StreamWriter("checksumSHA512.log", true))
             {
-                writetext.WriteLine(DateTime.Now + "....: Fin du traitement.");
+                writetext.WriteLine(DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss") + "....: Fin du traitement.");
             }
             if (isSilent == false)
             {
@@ -192,7 +214,7 @@ namespace SCANROOT
             }
         }
 
-        private void AddFile(string file, string hashCode, DateTime dateTime)
+        private void AddFile(string file, string hashCode, DateTime dateTime, string shareName)
         {
             using (SqlConnection connection = new SqlConnection(Properties.Settings.Default.connFsum))
             {
@@ -209,6 +231,8 @@ namespace SCANROOT
                     sqlCommand.Parameters["@HashCode"].Value = hashCode;
                     sqlCommand.Parameters.Add(new SqlParameter("@DateFile", SqlDbType.DateTime));
                     sqlCommand.Parameters["@DateFile"].Value = dateTime;
+                    sqlCommand.Parameters.Add(new SqlParameter("@ShareName", SqlDbType.VarChar, 50));
+                    sqlCommand.Parameters["@ShareName"].Value = shareName;
 
                     try
                     {
@@ -266,7 +290,7 @@ namespace SCANROOT
             }
         }
 
-        private void DeleteFile()
+        private void DeleteFile(string shareName)
         {
             using (SqlConnection connection = new SqlConnection(Properties.Settings.Default.connFsum))
             {
@@ -275,6 +299,10 @@ namespace SCANROOT
                 {
                     StringBuilder errorMessages = new StringBuilder();
                     sqlCommand.CommandType = CommandType.StoredProcedure;
+
+                    // Add input parameter for the stored procedure and specify what to use as its value.
+                    sqlCommand.Parameters.Add(new SqlParameter("@ShareName", SqlDbType.VarChar, 50));
+                    sqlCommand.Parameters["@ShareName"].Value = shareName;
 
                     try
                     {
@@ -285,7 +313,7 @@ namespace SCANROOT
                     }
                     catch (SqlException ex)
                     {
-                        ErrorMsg(errorMessages, ex, "-> COMMANDE DELETE ALL FILES...");
+                        ErrorMsg(errorMessages, ex, "-> COMMANDE DELETE ALL FILES... " + shareName);
                     }
                     finally
                     {
@@ -323,7 +351,7 @@ namespace SCANROOT
                     {
                         using (StreamWriter writetext = new StreamWriter("checksumSHA512.log", true))
                         {
-                            writetext.WriteLine(DateTime.Now + "....: Impossible d'accéder (permission non accordée) au dossier " + folderShare);
+                            writetext.WriteLine(DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss") + "....: Impossible d'accéder (permission non accordée) au dossier " + folderShare);
                         }
                     }
                 }
@@ -331,7 +359,7 @@ namespace SCANROOT
                 {
                     using (StreamWriter writetext = new StreamWriter("checksumSHA512.log", true))
                     {
-                        writetext.WriteLine(DateTime.Now + "....: Impossible d'accéder (permission non accordée) au dossier " + folderShare);
+                        writetext.WriteLine(DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss") + "....: Impossible d'accéder (permission non accordée) au dossier " + folderShare);
                     }
                 }
             }
@@ -348,7 +376,7 @@ namespace SCANROOT
             {
                 using (StreamWriter writetext = new StreamWriter("checksumSHA512.log", true))
                 {
-                    writetext.WriteLine(DateTime.Now + "....: Impossible d'accéder (permission non accordée) au dossier " + rootPath);
+                    writetext.WriteLine(DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss") + "....: Impossible d'accéder (permission non accordée) au dossier " + rootPath);
                 }
             }
 
@@ -359,7 +387,7 @@ namespace SCANROOT
         {
             for (int i = 0; i < ex.Errors.Count; i++)
             {
-                errorMessages.Append(DateTime.Now + "... Index #" + i + "\n" +
+                errorMessages.Append(DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss") + "... Index #" + i + "\n" +
                     "Message: " + ex.Errors[i].Message + "\n" +
                     "LineNumber: " + ex.Errors[i].LineNumber + "\n" +
                     "Source: " + ex.Errors[i].Source + "\n" +

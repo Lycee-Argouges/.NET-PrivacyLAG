@@ -16,9 +16,9 @@ namespace SCANROOT
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            if (args.Length > 0)
+            if (args.Length > 1)
             {
-                Application.Run(new RunApp(args[0]));
+                Application.Run(new RunApp(args[0], args[1]));
             } else
             {
                 Application.Run(new RunApp());
